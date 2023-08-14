@@ -18,7 +18,7 @@ public class ProductServiceImpl implements ProductService {
 
     private ProductDAO productDAO;
 
-    private final Logger log = LoggerFactory.getLogger(ProductServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(ProductServiceImpl.class);
 
     public ProductServiceImpl(ProductDAO productDAO) {
         this.productDAO = productDAO;
