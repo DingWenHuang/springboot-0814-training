@@ -102,6 +102,10 @@ public class ProductDAOImpl implements ProductDAO {
 
         sql = addFilteringSQL(sql, map, productQueryParams);
 
+        sql += " ORDER BY " + productQueryParams.getOrderBy() + " " + productQueryParams.getSort();
+
+        sql += " LIMIT " + (productQueryParams.getPage() - 1) * 12 + ", 12";
+
         return namedParameterJdbcTemplate.query(sql, map, new ProductRowMapper());
     }
 
