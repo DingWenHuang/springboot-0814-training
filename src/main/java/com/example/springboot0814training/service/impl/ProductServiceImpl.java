@@ -2,6 +2,7 @@ package com.example.springboot0814training.service.impl;
 
 import com.example.springboot0814training.dao.ProductDAO;
 import com.example.springboot0814training.dto.ProductRequest;
+import com.example.springboot0814training.dto.ProductQueryParams;
 import com.example.springboot0814training.model.Product;
 import com.example.springboot0814training.service.ProductService;
 import org.springframework.http.HttpStatus;
@@ -51,7 +52,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProducts() {
-        return productDAO.getProducts();
+    public List<Product> getProducts(ProductQueryParams productQueryParams) {
+        return productDAO.getProducts(productQueryParams);
     }
 }

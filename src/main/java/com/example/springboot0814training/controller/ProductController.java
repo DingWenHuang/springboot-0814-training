@@ -1,6 +1,8 @@
 package com.example.springboot0814training.controller;
 
+import com.example.springboot0814training.constant.ProductCategory;
 import com.example.springboot0814training.dto.ProductRequest;
+import com.example.springboot0814training.dto.ProductQueryParams;
 import com.example.springboot0814training.model.Product;
 import com.example.springboot0814training.service.ProductService;
 import jakarta.validation.Valid;
@@ -19,8 +21,13 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts() {
-        List<Product> products = productService.getProducts();
+    public ResponseEntity<List<Product>> getProducts(@RequestParam(required = false) String search,
+                                                     @RequestParam(required = false) ProductCategory category) {
+        ProductQueryParams productQueryParams = new ProductQueryParams();
+        productQueryParams.setSearch(search);
+        productQueryParams.setCategory(category);
+
+        List<Product> products = productService.getProducts(productQueryParams);
         return ResponseEntity.status(200).body(products);
     }
 

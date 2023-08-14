@@ -2,6 +2,7 @@ package com.example.springboot0814training.dao.impl;
 
 import com.example.springboot0814training.dao.ProductDAO;
 import com.example.springboot0814training.dto.ProductRequest;
+import com.example.springboot0814training.dto.ProductQueryParams;
 import com.example.springboot0814training.model.Product;
 import com.example.springboot0814training.rowmapper.ProductRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -94,9 +95,27 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public List<Product> getProducts() {
-        String sql = "SELECT product_id, product_name, category, image_url, price, stock, description, created_date, last_modified_date FROM product";
+    public List<Product> getProducts(ProductQueryParams productQueryParams) {
+        String sql = "SELECT product_id, product_name, category, image_url, price, stock, description, created_date, last_modified_date FROM product WHERE 1 = 1";
 
-        return namedParameterJdbcTemplate.query(sql, new ProductRowMapper());
+        Map<String, Object> map = new HashMap<>();
+
+        sql = addFilteringSQL(sql, map, productQueryParams);
+
+        return namedParameterJdbcTemplate.query(sql, map, new ProductRowMapper());
+    }
+
+    private String addFilteringSQL(String sql, Map<String, Object> map, ProductQueryParams productQueryParams) {
+        if (productQueryParams.getSearch() != null) {
+            sql += " AND product_name LIKE :search";
+            map.put("search", "%" + productQueryParams.getSearch() + "%");
+        }
+
+        if (productQueryParams.getCategory() != null) {
+            sql += " AND category = :category";
+            map.put("category", productQueryParams.getCategory().name());
+        }
+
+        return sql;
     }
 }
