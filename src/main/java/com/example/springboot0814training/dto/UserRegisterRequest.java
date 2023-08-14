@@ -1,10 +1,9 @@
 package com.example.springboot0814training.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
-public class UserRegisterQuest {
+public class UserRegisterRequest {
 
     @NotBlank
     @Email

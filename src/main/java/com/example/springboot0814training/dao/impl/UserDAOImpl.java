@@ -1,7 +1,7 @@
 package com.example.springboot0814training.dao.impl;
 
 import com.example.springboot0814training.dao.UserDAO;
-import com.example.springboot0814training.dto.UserRegisterQuest;
+import com.example.springboot0814training.dto.UserRegisterRequest;
 import com.example.springboot0814training.model.User;
 import com.example.springboot0814training.rowmapper.UserRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -24,13 +24,13 @@ public class UserDAOImpl implements UserDAO {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
     @Override
-    public Integer register(UserRegisterQuest userRegisterQuest) {
-        String sql = "INSERT INTO user (email, password, created_date, last_modified_date) VALUES (:email, :password, :createdDate, :lastModifiedDate)";
+    public Integer register(UserRegisterRequest userRegisterRequest) {
+        String sql = "INSERT INTO `user` (email, password, created_date, last_modified_date) VALUES (:email, :password, :createdDate, :lastModifiedDate)";
 
         Map<String, Object> map = new HashMap<>();
 
-        map.put("email", userRegisterQuest.getEmail());
-        map.put("password", userRegisterQuest.getPassword());
+        map.put("email", userRegisterRequest.getEmail());
+        map.put("password", userRegisterRequest.getPassword());
 
         Date now = new Date();
         map.put("createdDate", now);

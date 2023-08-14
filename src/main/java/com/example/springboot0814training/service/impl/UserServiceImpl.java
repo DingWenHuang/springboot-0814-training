@@ -2,13 +2,12 @@ package com.example.springboot0814training.service.impl;
 
 import com.example.springboot0814training.dao.UserDAO;
 import com.example.springboot0814training.dto.UserLoginRequest;
-import com.example.springboot0814training.dto.UserRegisterQuest;
+import com.example.springboot0814training.dto.UserRegisterRequest;
 import com.example.springboot0814training.model.User;
 import com.example.springboot0814training.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,19 +23,19 @@ public class UserServiceImpl implements UserService {
         this.userDAO = userDAO;
     }
     @Override
-    public Integer register(UserRegisterQuest userRegisterQuest) {
+    public Integer register(UserRegisterRequest userRegisterRequest) {
 
-        User user = userDAO.getUserByEmail(userRegisterQuest.getEmail());
+        User user = userDAO.getUserByEmail(userRegisterRequest.getEmail());
 
         if (user != null) {
-            log.error("Email {} is already in use", userRegisterQuest.getEmail());
+            log.error("Email {} is already in use", userRegisterRequest.getEmail());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
-        String hashedPassword = DigestUtils.md5DigestAsHex(userRegisterQuest.getPassword().getBytes());
-        userRegisterQuest.setPassword(hashedPassword);
+        String hashedPassword = DigestUtils.md5DigestAsHex(userRegisterRequest.getPassword().getBytes());
+        userRegisterRequest.setPassword(hashedPassword);
 
-        return userDAO.register(userRegisterQuest);
+        return userDAO.register(userRegisterRequest);
     }
 
     @Override
