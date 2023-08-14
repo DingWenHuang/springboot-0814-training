@@ -31,4 +31,15 @@ public class ProductServiceImpl implements ProductService {
     public Integer createProduct(ProductRequest productRequest) {
         return productDAO.createProduct(productRequest);
     }
+
+    @Override
+    public void updateProduct(Integer productId, ProductRequest productRequest) {
+        Product product = productDAO.getProductById(productId);
+
+        if (product == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        } else {
+            productDAO.updateProduct(productId, productRequest);
+        }
+    }
 }

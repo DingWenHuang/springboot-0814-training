@@ -31,4 +31,13 @@ public class ProductController {
 
         return ResponseEntity.status(201).body(product);
     }
+
+    @PutMapping("/products/{productId}")
+    public ResponseEntity<Product> updateProduct(@PathVariable Integer productId, @RequestBody @Valid ProductRequest productRequest) {
+        productService.updateProduct(productId, productRequest);
+
+        Product updatedProduct = productService.getProductById(productId);
+
+        return ResponseEntity.status(200).body(updatedProduct);
+    }
 }
