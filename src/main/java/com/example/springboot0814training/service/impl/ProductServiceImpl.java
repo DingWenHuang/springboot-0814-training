@@ -5,6 +5,8 @@ import com.example.springboot0814training.dto.ProductRequest;
 import com.example.springboot0814training.dto.ProductQueryParams;
 import com.example.springboot0814training.model.Product;
 import com.example.springboot0814training.service.ProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -16,6 +18,8 @@ public class ProductServiceImpl implements ProductService {
 
     private ProductDAO productDAO;
 
+    private final Logger log = LoggerFactory.getLogger(ProductServiceImpl.class);
+
     public ProductServiceImpl(ProductDAO productDAO) {
         this.productDAO = productDAO;
     }
@@ -24,6 +28,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = productDAO.getProductById(productId);
 
         if (product == null) {
+            log.warn("Product with id {} not found", productId);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         } else {
             return product;
@@ -40,6 +45,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = productDAO.getProductById(productId);
 
         if (product == null) {
+            log.warn("Product with id {} not found", productId);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         } else {
             productDAO.updateProduct(productId, productRequest);
