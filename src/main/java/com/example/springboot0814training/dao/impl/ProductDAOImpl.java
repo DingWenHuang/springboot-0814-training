@@ -122,4 +122,15 @@ public class ProductDAOImpl implements ProductDAO {
 
         return sql;
     }
+
+    @Override
+    public Integer getTotalProducts(ProductQueryParams productQueryParams) {
+        String sql = "SELECT COUNT(*) FROM product WHERE 1 = 1";
+
+        Map<String, Object> map = new HashMap<>();
+
+        sql = addFilteringSQL(sql, map, productQueryParams);
+
+        return namedParameterJdbcTemplate.queryForObject(sql, map, Integer.class);
+    }
 }

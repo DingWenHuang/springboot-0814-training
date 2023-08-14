@@ -16,4 +16,6 @@ public interface ProductService {
     void deleteProduct(Integer productId);
 
     List<Product> getProducts(ProductQueryParams productQueryParams);
+
+    Integer getTotalProducts(ProductQueryParams productQueryParams);
 }

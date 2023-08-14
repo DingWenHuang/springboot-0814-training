@@ -5,6 +5,7 @@ import com.example.springboot0814training.dto.ProductRequest;
 import com.example.springboot0814training.dto.ProductQueryParams;
 import com.example.springboot0814training.model.Product;
 import com.example.springboot0814training.service.ProductService;
+import com.example.springboot0814training.util.Page;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts(@RequestParam(required = false) String search,
+    public ResponseEntity<Page<Product>> getProducts(@RequestParam(required = false) String search,
                                                      @RequestParam(required = false) ProductCategory category,
                                                      @RequestParam(defaultValue = "created_date") String orderBy,
                                                      @RequestParam(defaultValue = "desc") String sort,
@@ -33,8 +34,16 @@ public class ProductController {
         productQueryParams.setSort(sort);
         productQueryParams.setPage(page);
 
+        Integer total = productService.getTotalProducts(productQueryParams);
+
         List<Product> products = productService.getProducts(productQueryParams);
-        return ResponseEntity.status(200).body(products);
+
+        Page<Product> productPage = new Page<>();
+        productPage.setPage(page);
+        productPage.setTotal(total);
+        productPage.setResults(products);
+
+        return ResponseEntity.status(200).body(productPage);
     }
 
     @GetMapping("/products/{productId}")
