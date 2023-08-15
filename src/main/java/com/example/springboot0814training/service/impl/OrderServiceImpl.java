@@ -5,6 +5,7 @@ import com.example.springboot0814training.dao.ProductDAO;
 import com.example.springboot0814training.dao.UserDAO;
 import com.example.springboot0814training.dto.BuyItem;
 import com.example.springboot0814training.dto.CreateOrderRequest;
+import com.example.springboot0814training.dto.OrderQueryParams;
 import com.example.springboot0814training.model.Order;
 import com.example.springboot0814training.model.OrderItem;
 import com.example.springboot0814training.model.Product;
@@ -98,5 +99,30 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderItemList(orderItemList);
 
         return order;
+    }
+
+    @Override
+    public List<Order> getOrders(OrderQueryParams orderQueryParams) {
+
+        User user = userDAO.getUserById(orderQueryParams.getUserId());
+
+        if (user == null) {
+            log.warn("User ID: {} is not exists", orderQueryParams.getUserId());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        List<Order> orderList = orderDAO.getOrders(orderQueryParams);
+
+        for (Order order : orderList) {
+            List<OrderItem> orderItemList = orderDAO.getOrderItemsByOrderId(order.getOrderId());
+            order.setOrderItemList(orderItemList);
+        }
+
+        return orderList;
+    }
+
+    @Override
+    public Integer countOrders(OrderQueryParams orderQueryParams) {
+        return orderDAO.countOrders(orderQueryParams);
     }
 }

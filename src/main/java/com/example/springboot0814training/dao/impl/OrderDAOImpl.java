@@ -1,6 +1,7 @@
 package com.example.springboot0814training.dao.impl;
 
 import com.example.springboot0814training.dao.OrderDAO;
+import com.example.springboot0814training.dto.OrderQueryParams;
 import com.example.springboot0814training.model.Order;
 import com.example.springboot0814training.model.OrderItem;
 import com.example.springboot0814training.rowmapper.OrderItemRowMapper;
@@ -52,7 +53,7 @@ public class OrderDAOImpl implements OrderDAO {
     public void createOrderItem(Integer orderId, List<OrderItem> orderItemList) {
         String sql = "INSERT INTO order_item (order_id, product_id, quantity, amount) VALUES (:orderId, :productId, :quantity, :amount)";
 
-        MapSqlParameterSource[] mapSqlParameterSources  = new MapSqlParameterSource[orderItemList.size()];
+        MapSqlParameterSource[] mapSqlParameterSources = new MapSqlParameterSource[orderItemList.size()];
 
         for (int i = 0; i < orderItemList.size(); i++) {
             OrderItem orderItem = orderItemList.get(i);
@@ -93,5 +94,44 @@ public class OrderDAOImpl implements OrderDAO {
         List<OrderItem> orderItemList = namedParameterJdbcTemplate.query(sql, map, new OrderItemRowMapper());
 
         return orderItemList;
+    }
+
+    @Override
+    public List<Order> getOrders(OrderQueryParams orderQueryParams) {
+        String sql = "SELECT order_id, user_id, total_amount, created_date, last_modified_date FROM `order` WHERE 1 = 1";
+
+        Map<String, Object> map = new HashMap<>();
+
+        sql = addFilteringSql(sql, map, orderQueryParams);
+
+        sql += " ORDER BY created_date DESC";
+
+        sql += " LIMIT " + (orderQueryParams.getPage() - 1) * 5 + ", 5";
+
+        List<Order> orderList = namedParameterJdbcTemplate.query(sql, map, new OrderRowMapper());
+
+        return orderList;
+    }
+
+    @Override
+    public Integer countOrders(OrderQueryParams orderQueryParams) {
+        String sql = "SELECT COUNT(*) FROM `order` WHERE 1 = 1";
+
+        Map<String, Object> map = new HashMap<>();
+
+        sql = addFilteringSql(sql, map, orderQueryParams);
+
+        Integer count = namedParameterJdbcTemplate.queryForObject(sql, map, Integer.class);
+
+        return count;
+    }
+
+    private String addFilteringSql(String sql, Map<String, Object> map, OrderQueryParams orderQueryParams) {
+        if (orderQueryParams.getUserId() != null) {
+            sql += " AND user_id = :userId";
+            map.put("userId", orderQueryParams.getUserId());
+        }
+
+        return sql;
     }
 }

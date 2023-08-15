@@ -1,5 +1,6 @@
 package com.example.springboot0814training.dao;
 
+import com.example.springboot0814training.dto.OrderQueryParams;
 import com.example.springboot0814training.model.Order;
 import com.example.springboot0814training.model.OrderItem;
 
@@ -14,4 +15,8 @@ public interface OrderDAO {
     Order getOrderById(Integer orderId);
 
     List<OrderItem> getOrderItemsByOrderId(Integer orderId);
+
+    List<Order> getOrders(OrderQueryParams orderQueryParams);
+
+    Integer countOrders(OrderQueryParams orderQueryParams);
 }
