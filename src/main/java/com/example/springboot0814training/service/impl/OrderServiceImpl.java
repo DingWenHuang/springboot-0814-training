@@ -60,7 +60,7 @@ public class OrderServiceImpl implements OrderService {
 
             if (product == null) {
                 log.warn("Product ID: {} is not exists", buyItem.getProductId());
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
             }
 
             if (product.getStock() < buyItem.getQuantity()) {
