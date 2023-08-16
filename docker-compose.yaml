@@ -5,13 +5,22 @@ services:
     image: mysql:8.0.32
     restart: always
     container_name: mysql
+
+    volumes:
+      - "./sqlscript/initDB.sql:/docker-entrypoint-initdb.d/1.sql"
+
     environment:
       - MYSQL_ROOT_PASSWORD=rootroot
       - MYSQL_DATABASE=mall_demo
       - MYSQL_USER=wen
       - MYSQL_PASSWORD=12345
-    volumes:
-      - "./sqlscript/initDB.sql:/docker-entrypoint-initdb.d/1.sql"
+      - LANG=C.UTF-8
+      - TZ=Asia/Taipei
+
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+
     expose:
       - 3306
     ports:
