@@ -51,7 +51,8 @@ public class ProductDAOImpl implements ProductDAO {
         // 創建SQL語句
         String sql = "INSERT INTO product (product_name, category, image_url, price, stock, description, created_date, last_modified_date) VALUES (:productName, :category, :imageUrl, :price, :stock, :description, :createdDate, :lastModifiedDate)";
 
-        // 創建Map對象用來設置SQL語句中的參數，設置的參數包括商品名稱、類別、圖片URL、價格、庫存、描述、創建時間、最後修改時間
+        // 創建Map對象用來設置SQL語句中的參數
+        // 設置的參數包括商品名稱、類別、圖片URL、價格、庫存、描述、創建時間、最後修改時間
         Map<String, Object> map = new HashMap<>();
         map.put("productName", productRequest.getProductName());
         map.put("category", productRequest.getCategory().name());

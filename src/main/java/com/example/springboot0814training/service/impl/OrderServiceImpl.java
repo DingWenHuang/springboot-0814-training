@@ -66,13 +66,13 @@ public class OrderServiceImpl implements OrderService {
             // 檢查 buyItem 中的 productId 是否存在
             Product product = productDAO.getProductById(buyItem.getProductId());
 
-            // 如果 productId 不存在，則回傳 400 BAD_REQUEST，並且在 console 中印出警告訊息
+            // 如果商品資料不存在，則回傳 400 BAD_REQUEST，並且在 console 中印出警告訊息
             if (product == null) {
                 log.warn("Product ID: {} is not exists", buyItem.getProductId());
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
             }
 
-            // 檢查 buyItem 中的 quantity 是否大於庫存
+            // 檢查商品庫存是否足夠
             // 如果大於庫存，則回傳 400 BAD_REQUEST，並且在 console 中印出警告訊息
             if (product.getStock() < buyItem.getQuantity()) {
                 log.warn("Product ID: {} is out of stock", buyItem.getProductId());
@@ -135,7 +135,7 @@ public class OrderServiceImpl implements OrderService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
-        // 根據 orderQueryParams 取得訂單
+        // 根據 orderQueryParams 取得符合該條件的訂單
         List<Order> orderList = orderDAO.getOrders(orderQueryParams);
 
         // 取得orderList中每一筆訂單，並根據訂單id取得訂單項目

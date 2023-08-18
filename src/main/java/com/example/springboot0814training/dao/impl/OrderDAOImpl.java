@@ -8,7 +8,6 @@ import com.example.springboot0814training.rowmapper.OrderItemRowMapper;
 import com.example.springboot0814training.rowmapper.OrderRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -76,7 +75,7 @@ public class OrderDAOImpl implements OrderDAO {
             mapSqlParameterSources[i].addValue("amount", orderItem.getAmount());
         }
 
-        // 執行批量插入
+        // 執行批量更新
         namedParameterJdbcTemplate.batchUpdate(sql, mapSqlParameterSources);
     }
 
@@ -105,6 +104,7 @@ public class OrderDAOImpl implements OrderDAO {
     public List<OrderItem> getOrderItemsByOrderId(Integer orderId) {
 
         // 創建SQL語句
+        // 這裡使用LEFT JOIN來查詢訂單項目對應的商品，取得商品的名稱和圖片URL
         String sql = "SELECT oi.order_item_id, oi.order_id, oi.product_id, oi.quantity, oi.amount, p.product_name, p.image_url FROM order_item oi LEFT JOIN product p ON oi.product_id = p.product_id WHERE oi.order_id = :orderId";
 
         // 創建Map對象用來設置SQL語句中的參數，這裡是根據orderId查詢，所以只需要設置orderId這個參數
