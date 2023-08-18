@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS product;
 CREATE TABLE IF NOT EXISTS product
 (
     product_id         INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -11,6 +12,7 @@ CREATE TABLE IF NOT EXISTS product
     last_modified_date TIMESTAMP    NOT NULL
 );
 
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user`
 (
     user_id            INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -20,6 +22,7 @@ CREATE TABLE IF NOT EXISTS `user`
     last_modified_date TIMESTAMP    NOT NULL
 );
 
+DROP TABLE IF EXISTS `order`;
 CREATE TABLE IF NOT EXISTS `order`
 (
     order_id           INT       NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -29,11 +32,12 @@ CREATE TABLE IF NOT EXISTS `order`
     last_modified_date TIMESTAMP NOT NULL
 );
 
+DROP TABLE IF EXISTS order_item;
 CREATE TABLE IF NOT EXISTS order_item
 (
-    order_item_id      INT       NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    order_id           INT       NOT NULL,
-    product_id         INT       NOT NULL,
-    quantity           INT       NOT NULL,
-    amount              DECIMAL   NOT NULL
+    order_item_id INT     NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    order_id      INT     NOT NULL,
+    product_id    INT     NOT NULL,
+    quantity      INT     NOT NULL,
+    amount        DECIMAL NOT NULL
 );
