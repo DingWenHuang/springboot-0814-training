@@ -207,7 +207,7 @@ public class ProductControllerTest {
                 .andExpect(status().is(200))
                 .andExpect(jsonPath("$.page", equalTo(1)))
                 .andExpect(jsonPath("$.total", equalTo(7)))
-                .andExpect(jsonPath("$.results", hasSize(7)))
+                .andExpect(jsonPath("$.results", hasSize(5)))
                 .andExpect(jsonPath("$.results[0].productId", equalTo(7)))
                 .andExpect(jsonPath("$.results[0].productName", equalTo("Tesla")))
                 .andExpect(jsonPath("$.results[0].price", equalTo(450000)))
@@ -249,7 +249,7 @@ public class ProductControllerTest {
                 .andExpect(status().is(200))
                 .andExpect(jsonPath("$.page", equalTo(1)))
                 .andExpect(jsonPath("$.total", equalTo(7)))
-                .andExpect(jsonPath("$.results", hasSize(7)))
+                .andExpect(jsonPath("$.results", hasSize(5)))
                 .andExpect(jsonPath("$.results[0].productId", equalTo(3)))
                 .andExpect(jsonPath("$.results[0].productName", equalTo("好吃又鮮甜的蘋果橘子")))
                 .andExpect(jsonPath("$.results[0].price", equalTo(10)))
@@ -269,6 +269,6 @@ public class ProductControllerTest {
                 .andExpect(status().is(200))
                 .andExpect(jsonPath("$.page", equalTo(2)))
                 .andExpect(jsonPath("$.total", equalTo(7)))
-                .andExpect(jsonPath("$.results", hasSize(0)));
+                .andExpect(jsonPath("$.results", hasSize(2)));
     }
 }
