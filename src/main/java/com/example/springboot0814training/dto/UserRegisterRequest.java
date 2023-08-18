@@ -5,6 +5,11 @@ import jakarta.validation.constraints.NotBlank;
 
 public class UserRegisterRequest {
 
+    // UserRegisterRequest是用來接收前端傳來的資料，用來註冊
+    // 需要提供使用者email和密碼
+    // 與UserLoginRequest目前雖然都只需要email和密碼，但未來可能會有不同的需求
+    // 例如註冊時提供姓名、性別等資料，或是登入時提供手機號碼、生日等資料
+
     @NotBlank
     @Email
     private String email;
