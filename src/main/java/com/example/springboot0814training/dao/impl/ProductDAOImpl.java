@@ -102,7 +102,7 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public void deleteProduct(Integer productId) {
+    public void deleteProductById(Integer productId) {
 
         // 創建SQL語句
         String sql = "DELETE FROM product WHERE product_id = :productId";
@@ -142,7 +142,7 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public Integer getTotalProducts(ProductQueryParams productQueryParams) {
+    public Integer countProducts(ProductQueryParams productQueryParams) {
 
         // 創建SQL語句
         String sql = "SELECT COUNT(*) FROM product WHERE 1 = 1";

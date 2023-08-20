@@ -14,11 +14,11 @@ public interface ProductDAO {
 
     void updateProduct(Integer productId, ProductRequest productRequest);
 
-    void deleteProduct(Integer productId);
+    void deleteProductById(Integer productId);
 
     List<Product> getProducts(ProductQueryParams productQueryParams);
 
-    Integer getTotalProducts(ProductQueryParams productQueryParams);
+    Integer countProducts(ProductQueryParams productQueryParams);
 
     void updateStock(Integer productId, Integer newStock);
 }

@@ -43,16 +43,16 @@ public class ProductController {
         productQueryParams.setPage(page);
 
         // 商品總筆數
-        Integer total = productService.getTotalProducts(productQueryParams);
+        Integer total = productService.countProducts(productQueryParams);
 
         // 取得商品列表
-        List<Product> products = productService.getProducts(productQueryParams);
+        List<Product> productList = productService.getProducts(productQueryParams);
 
         // 將商品列表與商品總筆數封裝成分頁物件
         Page<Product> productPage = new Page<>();
         productPage.setPage(page);
         productPage.setTotal(total);
-        productPage.setResults(products);
+        productPage.setResults(productList);
 
         return ResponseEntity.status(200).body(productPage);
     }
@@ -98,7 +98,7 @@ public class ProductController {
     public ResponseEntity<?> deleteProduct(@PathVariable Integer productId) {
 
         // 不管要刪除的商品是否存在，都回傳204 No Content
-        productService.deleteProduct(productId);
+        productService.deleteProductById(productId);
 
         return ResponseEntity.status(204).build();
     }

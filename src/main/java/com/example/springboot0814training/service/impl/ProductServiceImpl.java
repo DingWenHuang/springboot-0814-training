@@ -63,10 +63,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void deleteProduct(Integer productId) {
+    public void deleteProductById(Integer productId) {
 
         // 根據 productId 從資料庫中刪除該筆資料
-        productDAO.deleteProduct(productId);
+        productDAO.deleteProductById(productId);
     }
 
     @Override
@@ -77,8 +77,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Integer getTotalProducts(ProductQueryParams productQueryParams) {
+    public Integer countProducts(ProductQueryParams productQueryParams) {
         // 根據 productQueryParams 從資料庫中篩選出符合條件的商品總數
-        return productDAO.getTotalProducts(productQueryParams);
+        return productDAO.countProducts(productQueryParams);
     }
 }
