@@ -23,7 +23,7 @@ public class UserController {
     }
 
 
-    @Operation(summary = "將使用者資料註冊到資料庫內，並回傳儲存後的結果，如信箱已被註冊過會回傳400 Bad Request")
+    @Operation(summary = "將使用者資料註冊到資料庫內，並回傳儲存後的結果，如信箱已被註冊過或是信箱格式錯誤會回傳400 Bad Request")
     @PostMapping("/users/register")
     public ResponseEntity<User> register(@RequestBody @Valid UserRegisterRequest userRegisterRequest) {
 
